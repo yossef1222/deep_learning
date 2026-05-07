@@ -1,378 +1,287 @@
-# Deep Learning Course Project: End-to-End DL vs DL+ML Feature Extraction
-
-## Quick Start
-
-Get up and running in 3 steps:
-
-```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. (Optional) Verify setup
-python setup_check.py
-
-# 3. Download datasets (or let main.py auto-prompt)
-python download_data.py
-
-# 4. Run the complete project
-python main.py
-```
-
-## Project Overview
-
-This project evaluates the performance of two deep learning strategies for image classification using **PyTorch**:
-
-1. **Approach-1 (Hybrid Pipeline)**: Deep Learning-based Feature Extraction + Traditional ML Classifier
-   - Uses a pre-trained CNN as a fixed feature extractor
-   - Extracts feature vectors from images
-   - Trains a traditional ML classifier (SVM or Logistic Regression)
-
-2. **Approach-2 (End-to-End)**: Fully Integrated Deep Learning Model
-   - Uses the same pre-trained CNN architecture
-   - Fine-tunes the model end-to-end for classification
-
-## Framework
-
-**PyTorch Implementation** with:
-- `torch` & `torchvision` for deep learning
-- `torchvision.models` for pre-trained models
-- `torch.nn` & `torch.optim` for model building and training
-- GPU support (CUDA) if available
-
-## Project Structure
-
-```
-deep_learning/
-├── data/
-│   ├── raw/                 # Original datasets
-│   ├── processed/           # Preprocessed data
-│   └── augmented/           # Augmented data
-├── models/                  # Trained model weights
-├── scripts/                 # Additional scripts (optional)
-├── results/
-│   ├── plots/               # Visualization outputs
-│   └── metrics/             # Evaluation metrics
-├── documentation/           # Project documentation
-├── config.py                # Configuration and hyperparameters
-├── data_loader.py           # Data loading and preprocessing (PyTorch)
-├── approach1_ml_classifier.py  # Approach-1 (PyTorch feature extraction + sklearn)
-├── approach2_end_to_end.py  # Approach-2 (PyTorch end-to-end training)
-├── utils.py                 # Utility functions
-├── download_data.py         # Dataset downloader (interactive menu)
-├── setup_check.py           # System verification script
-├── main.py                  # Main execution script
-├── quick_setup.sh           # Automated setup script (Linux/Mac)
-├── requirements.txt         # Python dependencies
-└── README.md                # This file
-```
-
-## Requirements
-
-### Supported Datasets
-- CIFAR-10 (General Object Recognition)
-- Brain MRI (Medical Imaging)
-- Chest X-Ray (Medical Diagnosis)
-- Plant Village (Agriculture)
-
-### Supported Pre-trained Models (PyTorch)
-- ResNet50
-- EfficientNet-B0
-
-### ML Classifiers (for Approach-1)
-- Support Vector Machine (SVM)
-- Logistic Regression
-
-## Installation
-
-1. **Clone or navigate to the project directory**
-   ```bash
-   cd ~/deep_learning
-   ```
-
-2. **Create a virtual environment (optional but recommended)**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Download Datasets** (Optional - will auto-prompt on first run)
-   ```bash
-   # Interactive dataset selection
-   python download_data.py
-   
-   # Or let main.py prompt you when running:
-   python main.py
-   ```
-
-## Data Setup
-
-### Quick Start (Recommended)
-Simply run:
-```bash
-python main.py
-```
-The script will automatically check for datasets and prompt you to download if needed.
-
-### Manual Dataset Download
-For more control, use the dedicated download script:
-```bash
-python download_data.py
-```
-
-This provides an interactive menu to:
-- Download CIFAR-10 (~180 MB) - No credentials needed
-- Download Brain MRI - Requires Kaggle credentials
-- Download Chest X-Ray - Requires Kaggle credentials  
-- Download Plant Village - Requires Kaggle credentials (~3.5 GB)
-- Setup Kaggle API credentials
-- Verify existing downloads
-
-### Kaggle Datasets (Optional)
-For Kaggle datasets, you'll need API credentials:
-
-1. Go to: https://www.kaggle.com/settings/account
-2. Click "Create New API Token"
-3. Save `kaggle.json` to `~/.kaggle/`
-4. Run: `chmod 600 ~/.kaggle/kaggle.json`
-
-Then use `download_data.py` to download Brain MRI, Chest X-Ray, or Plant Village datasets.
-
-## Configuration
-
-Edit `config.py` to set:
-- **Dataset name** (CIFAR-10, Brain-MRI, etc.)
-- **Model architecture** (ResNet50, VGG16, EfficientNet-B0, MobileNetV2)
-- **Hyperparameters** (learning rate, batch size, epochs, etc.)
-- **ML classifier type** (SVM or Logistic Regression)
-- **Data augmentation settings**
-
-### Example Configuration
-```python
-DATASET_CONFIG = {
-    'name': 'CIFAR-10',
-    'image_size': (224, 224),
-    'num_classes': 10,
-    'train_split': 0.7,
-}
-
-MODEL_CONFIG = {
-    'architecture': 'EfficientNet-B0',  # or 'ResNet50'
-    'pretrained': True,
-}
-
-TRAINING_CONFIG = {
-    'batch_size': 32,
-    'epochs': 50,
-    'learning_rate': 0.001,
-    'optimizer': 'adam',
-}
-```
-
-## Usage
-
-### Download Datasets
-
-```bash
-# Interactive menu for dataset selection
-python download_data.py
-```
-
-### Run the Complete Project
-
-```bash
-# Automatically checks for data and prompts if needed
-python main.py
-```
-
-This will:
-1. Check if dataset exists (auto-download if needed)
-2. Load and preprocess the dataset
-3. Train Approach-1 (DL Feature Extraction + ML) using PyTorch
-4. Train Approach-2 (End-to-End DL) using PyTorch
-5. Generate comparative analysis plots
-6. Save results and metrics
-
-### Output Files
-
-After running `main.py`, the following files will be generated:
-
-- `results/plots/`:
-  - `Approach-1_confusion_matrix.png` - Confusion matrix for Approach-1
-  - `Approach-2_confusion_matrix.png` - Confusion matrix for Approach-2
-  - `Approach-2_training_history.png` - Training curves (loss and accuracy)
-  - `approach_comparison.png` - Side-by-side comparison of both approaches
-
-- `results/metrics/`:
-  - `Approach-1_metrics.txt` - Classification report for Approach-1
-  - `Approach-2_metrics.txt` - Classification report for Approach-2
-
-- `results/summary.txt` - Overall project summary
-
-## Key Results
-
-### Evaluation Metrics
-- **Accuracy**: Overall correctness
-- **Precision**: Correctness of positive predictions
-- **Recall**: Coverage of actual positives
-- **F1-Score**: Harmonic mean of precision and recall
-- **Confusion Matrix**: Detailed classification breakdown
-
-### Performance Comparison
-The project generates visualizations comparing:
-- Accuracy, Precision, Recall, and F1-Score
-- Training time
-- Confusion matrices
-- Training curves (loss and accuracy over epochs)
-
-## Experimental Design
-
-### Core Experiment
-- Single dataset (e.g., CIFAR-10)
-- Single model architecture (e.g., EfficientNet-B0)
-- Comparison of two approaches
-
-### Extended Study (Optional)
-For more comprehensive evaluation, modify `config.py` to test:
-- Multiple model architectures (ResNet50, EfficientNet-B0)
-- Multiple datasets (CIFAR-10, Brain-MRI)
-- Impact of different hyperparameters
-
-## Data Preprocessing
-
-1. **Resizing**: All images resized to 224×224 using PIL
-2. **Normalization**: Pixel values normalized to [0, 1]
-3. **Augmentation**: Applied techniques include:
-   - Rotation (20°)
-   - Width/Height shifts (20%)
-   - Horizontal flipping
-   - Zooming (20%)
-4. **PyTorch Format**: Data converted to tensors with shape (N, C, H, W)
-
-## Model Details
-
-### Approach-1: Feature Extraction + ML (PyTorch)
-```
-Input Image → Pre-trained CNN (frozen) → Feature Extraction → 
-Flatten Features → Normalize → ML Classifier (SVM/LR) → Output
-```
-
-### Approach-2: End-to-End (PyTorch)
-```
-Input Image → Pre-trained CNN (fine-tuned) → Global Average Pooling → 
-Dense Layers (256 units) → Output Classification Layer → Output
-```
-
-## Hyperparameters
-
-### Deep Learning (Approach-2, PyTorch)
-- Learning Rate: 0.001
-- Batch Size: 32
-- Epochs: 50
-- Optimizer: Adam
-- Loss Function: CrossEntropyLoss
-
-### ML Classifier (Approach-1)
-- SVM Kernel: Linear
-- SVM C: 1.0
-- Logistic Regression Max Iterations: 1000
-
-## Advanced Features
-
-### Early Stopping
-Prevents overfitting by monitoring validation loss (patience: 5 epochs)
-
-### Fine-tuning (Optional)
-Uncomment in `main.py` to fine-tune the base model with a lower learning rate
-
-### GPU Acceleration
-- Automatic GPU detection using `torch.cuda.is_available()`
-- Models and data automatically moved to GPU/CPU as needed
-- Set `CUDA_VISIBLE_DEVICES` environment variable to control GPU usage
-
-### Custom Datasets
-Modify `data_loader.py` to load custom datasets in the expected format
-
-## Troubleshooting
-
-### Dataset Download Issues
-
-**CIFAR-10 Won't Download**
-- Check internet connection
-- Ensure `/data/raw/` directory exists and is writable
-- Try manually: `python -c "from torchvision.datasets import CIFAR10; CIFAR10('./data/raw/', download=True)"`
-
-**Kaggle Dataset Download Issues**
-- Ensure `kaggle.json` is in `~/.kaggle/`
-- Run: `chmod 600 ~/.kaggle/kaggle.json`
-- Verify credentials: `kaggle datasets list` should show available datasets
-- For detailed setup: https://github.com/Kaggle/kaggle-api#installation
-
-**Permission Denied**
-- Run: `chmod -R 755 ./data/`
-
-**Disk Space Issues**
-- CIFAR-10: ~180 MB
-- Brain MRI: ~2 GB
-- Chest X-Ray: ~1.5 GB
-- Plant Village: ~3.5 GB
-- Ensure sufficient free space before downloading
-
-### Memory Issues
-- Reduce `batch_size` in `config.py`
-- Use `EfficientNet-B0` or `MobileNetV2` (smaller models)
-
-### Dataset Not Found
-- Ensure dataset is in the correct location
-- Check `PATHS` configuration in `config.py`
-
-### GPU/CPU Selection
-- PyTorch automatically uses GPU if available
-- To force CPU: Set `CUDA_VISIBLE_DEVICES=""` before running
-- To use specific GPU: Set `CUDA_VISIBLE_DEVICES=0` for GPU 0
-
-### PyTorch Issues
-- Update PyTorch: `pip install --upgrade torch torchvision`
-- Check CUDA compatibility: `python -c "import torch; print(torch.cuda.is_available())"`
-
-## Project Requirements (Course)
-
-✅ **Requirement 1**: Dataset Selection and Technical Specifications
-✅ **Requirement 2**: DL Model Selection with justification
-✅ **Requirement 3**: Implementation Framework (both approaches with PyTorch)
-✅ **Requirement 4**: Comparative Analysis and Insights
-
-## Submission Checklist
-
-- [ ] PDF Report with all requirements
-- [ ] GitHub repository link with complete code
-- [ ] 1-minute video presentation
-- [ ] A3 Poster for in-class presentation
-- [ ] Runnable code with dataset
-- [ ] Results and visualizations
-
-## References
-
-- PyTorch Official: https://pytorch.org
-- Torchvision Models: https://pytorch.org/vision/stable/models.html
-- Scikit-learn: https://scikit-learn.org
-- ImageNet Pre-trained Models: https://en.wikipedia.org/wiki/ImageNet
-
-## License
-
-Academic Use - Course Project
-
-## Author
-
-Student Name - Deep Learning Course (CAI3105/CS460)
+# Deep Learning Course Project: End-to-End DL vs DL-Based Feature Learning
+## CAI3105/CS460 - 12th Week Project
+
+**College**: College of Computing and Information Technology – South Valley Campus  
+**Department**: Computer Science  
+**Lecturer**: Prof. Nashwa El-Bendary  
+**Course Code**: CAI3105/CS460  
+**Course**: Deep Learning  
+**Total Marks**: 20 Marks  
+**Submission Deadline**: Friday, May 8th 2026 (11:55PM)  
+**Submission Platform**: Moodle LMS
 
 ---
 
-**Framework**: PyTorch  
-**Submission Deadline**: Thursday, May 7th 2026 (11:55PM)  
-**Presentation Date**: Friday, May 8th 2026
+## Project Objective
 
+This project evaluates the performance of **End-to-End Deep Learning (DL) classification** against **DL-based Feature Learning**. The project requires a comparative study between:
+
+1. **Approach-1**: A hybrid pipeline that utilizes a pre-trained DL model for feature extraction followed by a traditional Machine Learning (ML) classifier
+2. **Approach-2**: A fully integrated end-to-end deep learning model using the same pre-trained DL model
+
+---
+
+## Team Structure and Submission Instructions
+
+This project is designed for collaborative work.
+
+### Team Requirements
+- **Maximum Team Size**: Each project team must not exceed **Four (4) students**
+
+### Submission Requirements
+
+#### 1. PDF Report (Individual Submission)
+- Each team member must submit one complete **report/documentation as a PDF file** on Moodle LMS
+- The report must be formally structured according to Requirements 1, 2, 3, and 4
+- All technical and analytical components must be thoroughly addressed
+
+#### 2. Code Repository (GitHub Link)
+- Each team member must submit via Moodle LMS: a link to the **public GitHub repository**
+- Repository must contain the complete, runnable implementation
+- Must include all scripts for:
+  - Data preprocessing
+  - Deep Learning (DL) feature extraction
+  - Machine Learning (ML) classification
+
+#### 3. Individual Video Presentation
+- Each team member must independently record a **concise video** (~1 minute)
+- Upload to personal YouTube channel and submit link via Moodle LMS
+- Presentation must cover:
+  - **Introduction**: Brief overview of the selected image dataset and pre-trained CNN architecture utilized
+  - **Comparative Analysis**: Summary of primary results comparing End-to-End DL model against ML classifier powered by learned features
+  - **Technical Insights**: Personal evaluation regarding effectiveness of pre-trained models as fixed feature extractors versus fully integrated end-to-end training
+
+#### 4. In-Class Presentation & Discussion
+- **Date & Time**: Saturday, May 9th, 2026, during scheduled lecture time
+- **Presentation Duration**: 7–10 minutes per team
+- **Requirements**:
+  - **(1 mark) Dress Code**: Students must adhere to formal or semi-formal dress code
+  - **(1 mark) A3 Poster**: Each team must generate printed A3 poster according to provided template
+  - **Technical Readiness**: Teams must have laptop ready with dataset and runnable code prepared for technical discussion
+
+---
+
+# REQUIREMENT 1: Dataset Selection and Technical Specifications (5 marks)
+
+Teams must select **one** publicly available image dataset from the following suggested benchmarks:
+
+| Dataset | Problem Domain | Access Link |
+|---------|---|---|
+| Chest X-Ray (Pneumonia) | Medical Diagnosis | Kaggle Dataset / Mendeley Data |
+| Plant Village (Leaf Disease) | Agriculture | Kaggle Dataset / UCI Repository |
+| CIFAR-10 | General Object Recognition | Kaggle Dataset / TensorFlow Datasets |
+| Brain MRI (Tumor Detection) | Medical Imaging | Kaggle Dataset / Mendeley Data |
+
+For the selected dataset, provide the following:
+
+### 1.1 Dataset Metadata (1 mark)
+- **Source**: Where the dataset is obtained from
+- **Problem Domain**: Type of classification problem
+- **Total Number of Samples (N)**: Total number of images in the dataset
+
+### 1.2 Technical Specifications (1 mark)
+- **Image Resolution**: e.g., 224 x 224
+- **Color Channels**: RGB or Grayscale
+- **Total Number of Classes**: Number of classification categories
+
+### 1.3 Data Preprocessing (1 mark)
+Detail the steps taken to prepare the data, including:
+- Image resizing procedures
+- Pixel normalization techniques
+
+### 1.4 Data Augmentation (1 mark)
+Describe any Data Augmentation techniques employed (e.g., rotation, flipping, cropping, etc.)
+
+**Requirements**:
+- Specify which augmentation techniques are used
+- Provide clear justification for selection of these techniques
+- Explain necessity for the chosen dataset
+
+### 1.5 Data Splitting (1 mark)
+Specify the utilized partition of data into Training, Validation, and Testing sets
+
+**Example**: 70% Training / 15% Validation / 15% Testing sets
+
+---
+
+# REQUIREMENT 2: DL Model Selection (4 marks)
+
+### 2.1 Pre-trained Model Selection (1 mark)
+
+Select **one** pre-trained Convolutional Neural Network (CNN) architecture from:
+- ResNet50
+- VGG16
+- EfficientNet-B0
+- MobileNetV1
+
+This selected model will serve as the foundation for both comparative approaches:
+
+- **Approach-1**: The pre-trained model is used as a fixed feature extractor to generate input feature vectors for a traditional ML classifier (SVM or Logistic Regression)
+- **Approach-2 (End-to-End)**: The same pre-trained model is used as a complete, integrated deep learning classifier
+
+### 2.2 Technical Justification (2 marks)
+
+Provide a technical justification for the selected pre-trained DL model:
+
+**Must Include**:
+- Diagram or description of the model's architecture
+- Architecture sourced from literature
+- Original reference properly cited
+
+### 2.3 Hyperparameter Configuration (1 mark)
+
+Provide a detailed table listing the hyperparameters used for the DL and ML models selected for both implementations:
+
+**Include**:
+- Learning rate
+- Batch size
+- Number of epochs
+- Optimizer
+- SVM kernel type (if applicable)
+- Any other relevant hyperparameters
+
+---
+
+# REQUIREMENT 3: Implementation Framework (5 marks)
+
+## Approach-1: DL-Based Feature Learning + ML Classifier (3 marks)
+
+### Implementation Steps:
+
+1. **Feature Extraction**
+   - Utilize the selected pre-trained model as a feature extractor
+   - Convert images into numerical feature vectors
+
+2. **ML Classifier Training**
+   - Input learned features into a traditional ML algorithm:
+     - Support Vector Machine (SVM) with linear kernel, OR
+     - Logistic Regression (LR)
+
+3. **Performance Reporting**
+   - Report performance measures:
+     - Accuracy
+     - Precision
+     - Recall
+     - F-measure (F1-Score)
+     - Confusion Matrix
+
+---
+
+## Approach-2: End-to-End Deep Learning Model (2 marks)
+
+### Implementation Steps:
+
+1. **Model Implementation**
+   - Implement the same selected pre-trained CNN architecture
+   - Use as a complete end-to-end classification model
+
+2. **Performance Reporting**
+   - Report performance measures:
+     - Accuracy
+     - Precision
+     - Recall
+     - F-measure (F1-Score)
+     - Confusion Matrix
+
+---
+
+# REQUIREMENT 4: Comparative Analysis and Insights (4 marks)
+
+## 4.1 Performance Comparison (2 marks)
+
+Conduct a **comparative analysis** presenting results from:
+- Approach-1 (ML classifier using DL-based learned features)
+- Approach-2 (End-to-End DL model)
+
+**Requirements**:
+- Comparison must be supported by reported performance measures for both implementations
+- **Highly Recommended**: Utilize infographics such as:
+  - Bar charts for metric comparisons
+  - Learning curves (loss/accuracy)
+  - Confusion matrices
+  - Any visual aids to clearly illustrate comparative analysis between approaches
+
+---
+
+## 4.2 Conclusion and Insights (2 marks)
+
+Write a **concise conclusion** discussing the experimental results by addressing the following guidance questions:
+
+### i. Performance Comparison
+**How did the performance of the traditional ML classifier (based on DL-based learned features) compare to the performance of the end-to-end deep learning model?**
+
+### ii. Advantages and Limitations
+**What are the observed advantages or limitations of using pre-trained DL models as fixed feature extractors for traditional ML algorithms versus allowing the model to learn and classify in a single integrated pipeline?**
+
+### iii. Training Efficiency
+**Which approach proved to be more efficient in terms of training time?**
+
+### iv. Recommendation for Different Environments
+**Based on your findings, which strategy would you recommend for:**
+- **Resource-constrained environment** (e.g., mobile or edge computing)
+- **High-performance environment** (e.g., data center or cloud)
+
+---
+
+# BONUS MARKS (+2 Marks)
+
+Students may earn up to **2 bonus marks** in addition to the original 20-mark total for the CAI3105-CS460-DL-12th week project by completing the following:
+
+## Option 1: Extra CNN Model (1 Mark)
+- Apply an **additional CNN architecture** using the **same dataset**
+- Implement both Approach-1 and Approach-2 with this additional model
+- Present comparative analysis of performance results
+
+## Option 2: Extra Dataset (1 Mark)
+- Evaluate the **primary Deep Learning model** on a **second dataset**
+- Implement both approaches on the new dataset
+- Present comparative analysis of performance results
+
+**Note**: In both cases, a comparative analysis of the performance results must be presented in the final submission.
+
+---
+
+## Project Evaluation Summary
+
+### Marks Breakdown
+
+| Component | Marks |
+|-----------|-------|
+| Requirement 1: Dataset Selection & Technical Specs | 5 |
+| Requirement 2: DL Model Selection | 4 |
+| Requirement 3: Implementation Framework | 5 |
+| Requirement 4: Comparative Analysis & Insights | 4 |
+| In-Class Presentation: Dress Code | 1 |
+| In-Class Presentation: A3 Poster | 1 |
+| **Total Base Marks** | **20** |
+| **Bonus Marks (Optional)** | **+2** |
+
+---
+
+## Submission Checklist
+
+- [ ] PDF Report (Requirement 1-4 comprehensive)
+- [ ] GitHub Repository Link (public, runnable code)
+- [ ] 1-Minute Video Presentation (YouTube link)
+- [ ] A3 Poster (printed for presentation)
+- [ ] Formal/Semi-formal Dress Code (on presentation day)
+- [ ] Laptop Ready (with dataset and runnable code)
+- [ ] All Performance Metrics (Accuracy, Precision, Recall, F-measure, Confusion Matrix)
+- [ ] Comparative Visualizations (charts, curves, matrices)
+- [ ] Answers to All 4 Guidance Questions
+- [ ] Bonus Materials (if applicable)
+
+---
+
+## Important Dates
+
+- **Submission Deadline**: Friday, May 8th 2026 (11:55PM)
+- **In-Class Presentation**: Saturday, May 9th 2026
+- **Presentation Duration**: 7–10 minutes per team
+- **Platform**: Moodle LMS
+
+---
+
+**Good luck with your project!**
+
+For any questions regarding project requirements, contact your instructor.
