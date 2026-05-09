@@ -1,0 +1,149 @@
+{
+  "timestamp": "2026-05-07T22:14:04.253366",
+  "device": "cuda",
+  "approach1_tests": [
+    {
+      "dataset": "Brain-MRI",
+      "architecture": "EfficientNet-B0",
+      "classifier": "SVM",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "Glioma",
+          "class_id": 0,
+          "features_mean": 0.4108416438102722,
+          "features_std": 1.0275017023086548
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "Meningioma",
+          "class_id": 1,
+          "features_mean": 0.9091906547546387,
+          "features_std": 1.2804526090621948
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "No Tumor",
+          "class_id": 2,
+          "features_mean": 0.5965939164161682,
+          "features_std": 1.253501057624817
+        }
+      ],
+      "errors": [],
+      "extracted_features_shape": [
+        3,
+        1280
+      ]
+    },
+    {
+      "dataset": "Brain-MRI",
+      "architecture": "ResNet50",
+      "classifier": "SVM",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "Glioma",
+          "class_id": 0,
+          "features_mean": 1.7134760618209839,
+          "features_std": 2.892876386642456
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "Meningioma",
+          "class_id": 1,
+          "features_mean": 1.4808745384216309,
+          "features_std": 2.0591580867767334
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "No Tumor",
+          "class_id": 2,
+          "features_mean": 1.906348705291748,
+          "features_std": 2.9847304821014404
+        }
+      ],
+      "errors": [],
+      "extracted_features_shape": [
+        3,
+        2048
+      ]
+    },
+    {
+      "dataset": "Chest-XRay",
+      "architecture": "EfficientNet-B0",
+      "classifier": "SVM",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "COVID-19",
+          "class_id": 0,
+          "features_mean": 0.4108416438102722,
+          "features_std": 1.0275017023086548
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "Normal",
+          "class_id": 1,
+          "features_mean": 0.9091906547546387,
+          "features_std": 1.2804526090621948
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "COVID-19",
+          "class_id": 0,
+          "features_mean": 0.5965939164161682,
+          "features_std": 1.253501057624817
+        }
+      ],
+      "errors": [],
+      "extracted_features_shape": [
+        3,
+        1280
+      ]
+    },
+    {
+      "dataset": "Chest-XRay",
+      "architecture": "ResNet50",
+      "classifier": "SVM",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "COVID-19",
+          "class_id": 0,
+          "features_mean": 1.7134760618209839,
+          "features_std": 2.892876386642456
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "Normal",
+          "class_id": 1,
+          "features_mean": 1.4808745384216309,
+          "features_std": 2.0591580867767334
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "COVID-19",
+          "class_id": 0,
+          "features_mean": 1.906348705291748,
+          "features_std": 2.9847304821014404
+        }
+      ],
+      "errors": [],
+      "extracted_features_shape": [
+        3,
+        2048
+      ]
+    }
+  ],
+  "summary": {
+    "total_tests": 4,
+    "successful_tests": 4,
+    "failed_tests": 0,
+    "success_rate": "100.0%",
+    "total_predictions": 12
+  }
+}

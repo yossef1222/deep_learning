@@ -69,7 +69,7 @@ class EndToEndDLModel:
         
         return self.model
     
-    def train(self, X_train, y_train, X_val, y_val):
+    def train(self, X_train, y_train, X_val, y_val, augmentation_transform=None):
   
         if self.model is None:
             self.build_model()
@@ -112,6 +112,9 @@ class EndToEndDLModel:
             for batch_X, batch_y in tqdm(train_loader, desc=f"Epoch {epoch+1}/{self.training_config['epochs']}"):
                 batch_X = batch_X.to(self.device)
                 batch_y = batch_y.to(self.device)
+                
+                if augmentation_transform is not None:
+                    batch_X = augmentation_transform(batch_X)
                 
                 # Normalize
                 batch_X = self._normalize_batch(batch_X)
@@ -170,7 +173,6 @@ class EndToEndDLModel:
             print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_accuracy:.4f}, "
                   f"Val Loss: {val_loss:.4f}, Val Acc: {val_accuracy:.4f}")
             
-            # Early stopping
             if self.training_config['early_stopping']:
                 if val_loss < best_val_loss:
                     best_val_loss = val_loss

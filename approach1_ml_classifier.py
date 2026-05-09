@@ -13,7 +13,6 @@ from torchvision.models import ResNet50_Weights, EfficientNet_B0_Weights
 
 
 class FeatureExtractor:
-    """Fixed CNN feature extractor (NO training)"""
 
     def __init__(self, model_name='EfficientNet-B0', device='cpu'):
         self.model_name = model_name
@@ -81,11 +80,10 @@ class MLClassifierApproach1:
         self.extractor = None
         self.classifier = None
 
-    def train(self, X_train, y_train, X_val, y_val):
+    def train(self, X_train, y_train, X_val, y_val, augmentation_transform=None):
 
         start = time.time()
 
-        # feature extractor
         self.extractor = FeatureExtractor(
             model_name=self.model_config['architecture'],
             device=self.device

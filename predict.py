@@ -11,12 +11,10 @@ from config import (
     ML_CLASSIFIER_CONFIG
 )
 
-# =========================
-# CONFIG (مهم جدًا يكون مطابق للتدريب)
-# =========================
+
 config = {
-    'DATASETS_CONFIG': DATASETS_CONFIG[0],   # 👈 Brain MRI (4 classes)
-    'MODEL_CONFIG': MODELS_CONFIG[0],        # 👈 نفس الموديل اللي اتدرب
+    'DATASET_CONFIG': DATASETS_CONFIG[0],   
+    'MODEL_CONFIG': MODELS_CONFIG[0],        
     'TRAINING_CONFIG': TRAINING_CONFIG,
     'AUGMENTATION_CONFIG': AUGMENTATION_CONFIG,
     'ML_CLASSIFIER_CONFIG': ML_CLASSIFIER_CONFIG
@@ -47,7 +45,7 @@ model.model.eval()
 transform = transforms.Compose([
     transforms.Resize((128, 128)),
     transforms.ToTensor(),
-    transforms.Normalize(                      # 👈 أهم سطر
+    transforms.Normalize(                      
         [0.485, 0.456, 0.406],
         [0.229, 0.224, 0.225]
     )
@@ -84,7 +82,7 @@ def predict_image(img_path):
 # =========================
 # TEST
 # =========================
-image_path = "tee.jpeg"  # 👈 حط صورتك هنا
+image_path = "33.jpg" 
 
 result = predict_image(image_path)
 

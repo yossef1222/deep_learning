@@ -28,9 +28,6 @@ def main():
 
     all_results = {}
 
-    # =========================
-    # LOOP DATASETS
-    # =========================
     for dataset_config in DATASETS_CONFIG:
 
         print("\n" + "#" * 60)
@@ -50,6 +47,7 @@ def main():
 
         X_train, X_val, X_test = data['X_train'], data['X_val'], data['X_test']
         y_train, y_val, y_test = data['y_train'], data['y_val'], data['y_test']
+        augmentation_transform = data['augmentation']  
 
         # =========================
         # LOOP MODELS
@@ -67,39 +65,31 @@ def main():
             model_dir = os.path.join(PATHS['models'], exp_name)
             os.makedirs(model_dir, exist_ok=True)
 
-            # =========================
-            # APPROACH 1
-            # =========================
             start = time.time()
 
             approach1 = MLClassifierApproach1(config)
-            approach1.train(X_train, y_train, X_val, y_val)
+            approach1.train(X_train, y_train, X_val, y_val, augmentation_transform)
             a1_result = approach1.evaluate(X_test, y_test)
 
             a1_result['training_time'] = time.time() - start
-
-            # SAVE APPROACH-1 FEATURE EXTRACTOR (if exists)
+            
             if hasattr(approach1, "feature_extractor"):
                 torch.save(
                     approach1.feature_extractor.state_dict(),
                     os.path.join(model_dir, "feature_extractor.pth")
                 )
 
-            # SAVE ML MODEL (SVM / LR)
             if hasattr(approach1, "classifier"):
                 joblib.dump(
                     approach1.classifier,
                     os.path.join(model_dir, "ml_model.pkl")
                 )
 
-            # =========================
-            # APPROACH 2
-            # =========================
             start = time.time()
 
             approach2 = EndToEndDLModel(config)
             approach2.build_model()
-            approach2.train(X_train, y_train, X_val, y_val)
+            approach2.train(X_train, y_train, X_val, y_val, augmentation_transform)
 
             a2_result = approach2.evaluate(X_test, y_test)
             a2_result['training_time'] = time.time() - start

@@ -1,7 +1,4 @@
-"""
-Configuration file for Deep Learning project
-Contains all hyperparameters and settings
-"""
+
 
 DATASETS_CONFIG = [
     {
@@ -58,8 +55,8 @@ TRAINING_CONFIG = {
 # ML Classi
 # fier Configuration - Approach 1
 ML_CLASSIFIER_CONFIG = {
-    'classifier_type': 'SVM',  # Options: 'SVM', 'LogisticRegression'
-    'svm_kernel': 'linear',  # Options: 'linear', 'rbf', 'poly'
+    'classifier_type': 'SVM',  
+    'svm_kernel': 'rbf', 
     'svm_C': 1.0,
     'lr_max_iter': 1000,
     'test_size': 0.2,

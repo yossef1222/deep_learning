@@ -1,0 +1,165 @@
+{
+  "timestamp": "2026-05-07T22:11:48.980772",
+  "device": "cuda",
+  "approach1_tests": [],
+  "approach2_tests": [
+    {
+      "dataset": "Brain-MRI",
+      "architecture": "EfficientNet-B0",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "Meningioma",
+          "confidence": 0.9981690645217896,
+          "raw_output": [
+            -2.169503927230835,
+            4.887039661407471,
+            -2.289602756500244,
+            -3.5894999504089355
+          ]
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "No Tumor",
+          "confidence": 0.9377169013023376,
+          "raw_output": [
+            -2.884460926055908,
+            -0.09119293093681335,
+            2.7377686500549316,
+            -2.85377836227417
+          ]
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "Glioma",
+          "confidence": 0.9937615990638733,
+          "raw_output": [
+            5.363676071166992,
+            0.2584112286567688,
+            -3.1325953006744385,
+            -6.291835308074951
+          ]
+        }
+      ],
+      "errors": []
+    },
+    {
+      "dataset": "Brain-MRI",
+      "architecture": "ResNet50",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "Meningioma",
+          "confidence": 0.6409305334091187,
+          "raw_output": [
+            -0.9406595230102539,
+            1.0283132791519165,
+            0.08210992068052292,
+            -2.400691032409668
+          ]
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "No Tumor",
+          "confidence": 0.5604062676429749,
+          "raw_output": [
+            -0.8852676153182983,
+            1.061139464378357,
+            1.4393895864486694,
+            -5.0341572761535645
+          ]
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "Glioma",
+          "confidence": 0.992923378944397,
+          "raw_output": [
+            4.832555770874023,
+            -0.1417607069015503,
+            -3.7590534687042236,
+            -5.643664836883545
+          ]
+        }
+      ],
+      "errors": []
+    },
+    {
+      "dataset": "Chest-XRay",
+      "architecture": "EfficientNet-B0",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "COVID-19",
+          "confidence": 0.9603835940361023,
+          "raw_output": [
+            1.6268774271011353,
+            -1.561212182044983
+          ]
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "Normal",
+          "confidence": 0.9995163679122925,
+          "raw_output": [
+            -3.359332323074341,
+            4.274264812469482
+          ]
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "COVID-19",
+          "confidence": 0.9557766318321228,
+          "raw_output": [
+            1.5483479499816895,
+            -1.5249227285385132
+          ]
+        }
+      ],
+      "errors": []
+    },
+    {
+      "dataset": "Chest-XRay",
+      "architecture": "ResNet50",
+      "status": "SUCCESS",
+      "predictions": [
+        {
+          "image": "tee.jpeg",
+          "prediction": "Normal",
+          "confidence": 0.9978692531585693,
+          "raw_output": [
+            -3.2435214519500732,
+            2.905626058578491
+          ]
+        },
+        {
+          "image": "test.jpeg",
+          "prediction": "Normal",
+          "confidence": 0.9105241298675537,
+          "raw_output": [
+            -1.1790567636489868,
+            1.140994906425476
+          ]
+        },
+        {
+          "image": "33.jpg",
+          "prediction": "Normal",
+          "confidence": 0.7477971911430359,
+          "raw_output": [
+            -0.4667099416255951,
+            0.6201884746551514
+          ]
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "summary": {
+    "total_tests": 4,
+    "successful_tests": 4,
+    "failed_tests": 0,
+    "success_rate": "100.0%"
+  }
+}
